@@ -21,4 +21,5 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('educate.urls', 'educate'), namespace='educate')),
+    path('', include(('configuracion.urls', 'configuracion'), namespace='configuracion')),
 ]
