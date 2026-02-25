@@ -183,40 +183,27 @@ def config_departamentos(request):
     # Render  administracion.html
     if request.method == 'GET':
         lista_departamentos = Departamentos.objects.all()
-
-        # if usuario_datos.perfiles.consultar_localizacion == False:
-        # messages.add_message(request, messages.ERROR, 'No tienes permitido el acceso a ese modulo')
-        # return HttpResponseRedirect('/administracion/')
-
         return render(request, "config_departamentos.html", {'lista_departamentos': lista_departamentos})
     else:
         pass
-
 def config_departamentos_registrar(request):
     # Render  administracion.html
     if request.method == 'GET':
         lista_paises = Paises.objects.all()
+        return render(request, "config_departamentos_registrar.html", {'lista_paises': lista_paises})
 
-        # if usuario_datos.perfiles.registrar_localizacion == False:
-        # messages.add_message(request, messages.ERROR, 'No tienes permisos para registrar en este modulo')
-        # return HttpResponseRedirect('/configuracion/departamentos/')
-
-        return render(request, "config_departamentos_registrar.html", {'lista_paises': lista_paises,
-                                                                       # 'permisos': permisos,
-                                                                       # 'permiso_usuario': usuario_datos,
-                                                                       })
     elif request.method == 'POST':
 
         current_user = request.user
-        # usuario_datos = Usuarios_datos.objects.filter(usuario_id=current_user.id).first()
-
-        # if usuario_datos.perfiles.registrar_localizacion == False:
-        # messages.add_message(request, messages.ERROR, 'No tienes permisos para registrar en este modulo')
-        # return HttpResponseRedirect('/configuracion/departamentos/')
 
         paises = request.POST['paises']
         codigo = request.POST['codigo']
         descripcion = request.POST['descripcion']
+        lista_departamentos = Departamentos.objects.all()
+        lista_departamentos = lista_departamentos.filter(codigo=codigo)
+        if lista_departamentos.exists():
+            messages.error(request, f"Ya existe un registro con el código {codigo}")
+            return redirect('configuracion:conf_departamento_registrar')
 
         departamentos = Departamentos(
             paises_id=int(paises),
@@ -226,17 +213,12 @@ def config_departamentos_registrar(request):
         )
         departamentos.save()
 
-        messages.add_message(request, messages.INFO,
-                             'Se ha registrado el Departamento ' + (descripcion).encode(
-                                 'utf-8').strip() + ' satisfactoriamente.')
-
-        return HttpResponseRedirect('/configuracion/departamentos/')
-
-def config_departamentos_editar(request, id):
+        messages.info(request, f"Se ha registrado el Departamento {descripcion} satisfactoriamente.")
+        return redirect('configuracion:conf_departamento')
+def config_departamentos_editar(request, departamento_id):
     # Render  administracion.html
     if request.method == 'GET':
-        departamentos = Departamentos.objects.get(pk=id)
-
+        departamentos = Departamentos.objects.get(pk=departamento_id)
         lista_paises = Paises.objects.all()
 
         return render(request, "config_departamentos_editar.html", {'lista_paises': lista_paises,
@@ -248,39 +230,34 @@ def config_departamentos_editar(request, id):
         codigo = request.POST['codigo']
         descripcion = request.POST['descripcion']
 
-        departamentos = Departamentos(
-            id=None if not id else id,
-            paises_id=int(paises),
-            codigo=codigo,
-            descripcion=descripcion,
+        departamento = Departamentos.objects.get(pk=departamento_id)
+        duplicado = Departamentos.objects.filter(codigo=codigo).exclude(pk=departamento_id).exists()
 
-        )
-        departamentos.save()
+        if departamento:
+            if not duplicado:
+                departamento.paises_id = int(paises)
+                departamento.codigo = codigo
+                departamento.descripcion = descripcion
 
-        messages.add_message(request, messages.SUCCESS,
-                             'Se ha editado el Departamento ' + (descripcion).encode(
-                                 'utf-8').strip() + ' satisfactoriamente.')
+                departamento.save()
 
-        return HttpResponseRedirect('/configuracion/departamentos/')
+                messages.success(request, f"Se ha editado el departamento {departamento.descripcion.strip()} satisfactoriamente.")
+                return redirect('configuracion:conf_departamento')
 
-def config_departamentos_borrar(request, id):
+            else:
+                messages.error(request, f"El código del departamento:  {codigo} ya existe")
+                return redirect('configuracion:conf_departamento_editar', departamento_id=departamento_id)
+def config_departamentos_borrar(request, departamento_id):
     if request.method == 'GET':
-        departamento = Departamentos.objects.get(pk=id)
-
+        departamento = Departamentos.objects.get(pk=departamento_id)
         if departamento.municipios_set.all().exists():
-            messages.add_message(request, messages.ERROR,
-                                 'No se puede borrar el Departamento ' + str(
-                                     id) + ' porque tiene un Municipio asociado')
-
-            return HttpResponseRedirect('/configuracion/departamentos/')
-
+            messages.error(request,f"No se puede borrar el departamento {departamento.descripcion} porque tiene uno o varios pais asociado")
+            return redirect('configuracion:conf_departamento')
         else:
-
+            description = departamento.descripcion
             departamento.delete()
-            messages.add_message(request, messages.WARNING,
-                                 'Se ha borrado el Departamento ' + str(id) + ' satisfactoriamente')
-
-            return HttpResponseRedirect('/configuracion/departamentos/')
+            messages.success(request, f"Se ha borrado el departamento {description} satisfactoriamente.")
+            return redirect('configuracion:conf_departamento')
 
 
 # Municipios
@@ -288,44 +265,26 @@ def config_municipios(request):
     # Render  administracion.html
     if request.method == 'GET':
         lista_municipios = Municipios.objects.all()
-
-        # if usuario_datos.perfiles.consultar_localizacion == False:
-        # messages.add_message(request, messages.ERROR,
-        #                   'No tienes permitido el acceso a ese modulo')
-        # return HttpResponseRedirect('/administracion/')
-
         return render(request, "config_municipios.html", {'lista_municipios': lista_municipios})
     else:
         pass
-
 def config_municipios_registrar(request):
     # Render  administracion.html
     if request.method == 'GET':
         lista_departamentos = Departamentos.objects.all()
+        return render(request, "config_municipios_registrar.html", {'lista_departamentos': lista_departamentos})
 
-
-        # if usuario_datos.perfiles.registrar_localizacion == False:
-        # messages.add_message(request, messages.ERROR,
-        #                    'No tienes permisos para registrar en este modulo')
-        # return HttpResponseRedirect('/configuracion/municipios/')
-
-        return render(request, "config_municipios_registrar.html", {'lista_departamentos': lista_departamentos,
-                                                                    #  'permisos': permisos,
-                                                                    # 'permiso_usuario': usuario_datos,
-                                                                    })
     elif request.method == 'POST':
-
         current_user = request.user
-        # usuario_datos = Usuarios_datos.objects.filter(usuario_id=current_user.id).first()
-
-        # if usuario_datos.perfiles.registrar_localizacion == False:
-        #   messages.add_message(request, messages.ERROR,
-        #                       'No tienes permisos para registrar en este modulo')
-        # return HttpResponseRedirect('/configuracion/municipios/')
-
         departamentos = request.POST['departamentos']
         codigo = request.POST['codigo']
         descripcion = request.POST['descripcion']
+
+        lista_municipios = Municipios.objects.all()
+        lista_municipios = lista_municipios.filter(codigo=codigo)
+        if lista_municipios.exists():
+            messages.error(request, f"Ya existe un registro con el código {codigo}")
+            return redirect('configuracion:conf_municipio_registrar')
 
         municipios = Municipios(
             departamentos_id=int(departamentos),
@@ -335,16 +294,12 @@ def config_municipios_registrar(request):
         )
         municipios.save()
 
-        messages.add_message(request, messages.INFO,
-                             'Se ha registrado el Municipio ' + (descripcion).encode(
-                                 'utf-8').strip() + ' satisfactoriamente.')
-
-        return HttpResponseRedirect('/configuracion/municipios/')
-
-def config_municipios_editar(request, id):
+        messages.info(request, f"Se ha registrado el Municipio {descripcion} satisfactoriamente.")
+        return redirect('configuracion:conf_municipio')
+def config_municipios_editar(request, municipio_id):
     # Render  administracion.html
     if request.method == 'GET':
-        municipios = Municipios.objects.get(pk=id)
+        municipios = Municipios.objects.get(pk=municipio_id)
         lista_departamentos = Departamentos.objects.all()
 
         return render(request, "config_municipios_editar.html", {'lista_departamentos': lista_departamentos,
@@ -356,26 +311,29 @@ def config_municipios_editar(request, id):
         codigo = request.POST['codigo']
         descripcion = request.POST['descripcion']
 
-        municipios = Municipios(
-            id=None if not id else id,
-            departamentos_id=int(departamentos),
-            codigo=codigo,
-            descripcion=descripcion,
+        municipio = Municipios.objects.get(pk=municipio_id)
+        duplicado = Municipios.objects.filter(codigo=codigo).exclude(pk=municipio_id).exists()
+        if municipio:
+            if not duplicado:
+                municipio.departamentos_id = int(departamentos)
+                municipio.codigo = codigo
+                municipio.descripcion=descripcion
+                municipio.save()
 
-        )
-        municipios.save()
+                messages.success(request,f"Se ha editado el municipio {municipio.descripcion.strip()} satisfactoriamente.")
+                return redirect('configuracion:conf_municipio')
 
-        messages.add_message(request, messages.SUCCESS,
-                             'Se ha editado el Municipio ' + (descripcion).encode(
-                                 'utf-8').strip() + ' satisfactoriamente.')
+            else:
+                messages.error(request, f"El código del municipio:  {codigo} ya existe")
+                return redirect('configuracion:conf_municipio_editar', municipio_id=municipio_id)
 
-        return HttpResponseRedirect('/configuracion/municipios/')
 
-def config_municipios_borrar(request, id):
+
+def config_municipios_borrar(request, municipio_id):
     if request.method == 'GET':
-        municipio = Municipios.objects.get(pk=id)
+        municipio = Municipios.objects.get(pk=municipio_id)
+        description = municipio.descripcion
         municipio.delete()
-        messages.add_message(request, messages.WARNING, 'Se ha borrado el Departamento ' + str(id) + ' satisfactoriamente')
-
-        return HttpResponseRedirect('/configuracion/municipios/')
+        messages.success(request, f"Se ha borrado el municipio {description} satisfactoriamente.")
+        return redirect('configuracion:conf_municipio')
 

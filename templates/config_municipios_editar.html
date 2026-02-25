@@ -3,7 +3,7 @@
 {% block content %}
     <section class="content-header">
       <h1>
-        <a href="/configuracion/departamentos/">Departamentos</a>
+        <a href="{% url 'configuracion:conf_municipio' %}">Municipios</a>
         <small>Editar Información</small>
       </h1>
       {% if messages %}
@@ -44,27 +44,27 @@
               <!-- pestañas de el formulario-->
             <div class="tab-content">
                 <!-- barras de acceso -->
-                <div class="active tab-pane" id="departamentos">
+                <div class="active tab-pane" id="municipios">
                     <div class="row">
                       <div class="col-md-6">
-                          <form role="form" action="{% url 'configuracion:conf_departamento_editar' departamentos.id %}" method="POST">
+                          <form role="form" action="{% url 'configuracion:conf_municipio_editar' municipios.id %}" method="POST">
                               {% csrf_token %}
 
                               <input type="hidden" class="form-control" id="id" placeholder="CODIGO"
-                                     name="id" value="{{departamentos.id}}">
+                                     name="id" value="{{municipios.id}}">
 
                               <div class="row">
                                   <div class="col-md-12">
-                                   <label>Paises</label>
+                                   <label>Departamentos</label>
                                   <div class="input-group ">
                                     <span class="input-group-addon"><i class="fa fa-binoculars"></i></span>
-                                      <select class="form-control select2 " style="width: 100%;" name="paises" required>
+                                      <select class="form-control select2 " style="width: 100%;" name="departamentos" required>
                                            <option value="" selected disabled></option>
-                                              {% for paises in lista_paises %}
+                                              {% for departamentos in lista_departamentos %}
 
-                                              <option value="{{paises.id}}"
-                                                   {% if paises.id == departamentos.paises_id %}selected{% endif %}>
-                                                   {{paises.descripcion}}
+                                              <option value="{{departamentos.id}}"
+                                                   {% if departamentos.id == municipios.departamentos_id %}selected{% endif %}>
+                                                   {{departamentos.descripcion}}
                                                </option>
                                               {% endfor %}
                                       </select>
@@ -80,7 +80,7 @@
                                        <input type="text" class="form-control" id="codigo"
                                              name="codigo" placeholder="Codigo DIAN "
                                              style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                              value = "{{departamentos.codigo}}" required>
+                                              value = "{{municipios.codigo}}" required>
                                       </div>
                                   </div>
                               </div>
@@ -92,7 +92,7 @@
                                        <input type="text" class="form-control" id="descripcion"
                                              name="descripcion" placeholder="Descripcion "
                                              style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                              value = "{{departamentos.descripcion}}" required>
+                                              value = "{{municipios.descripcion}}" required>
                                       </div>
                                   </div>
                               </div>
@@ -104,7 +104,7 @@
                           </form>
                       </div>
                   </div>
-                    <!-- Tabla tipo identificacion existentes -->
+                    <!-- Tabla  -->
                 </div>
              </div>
 

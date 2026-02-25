@@ -3,7 +3,7 @@
 {% block content %}
     <section class="content-header">
       <h1>
-        <a href="#">Continentes</a>
+        <a href="{% url 'configuracion:conf_municipio' %}">Municipios</a>
         <small>Configuracion</small>
       </h1>
 
@@ -41,7 +41,7 @@
       {% endif %}
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Configuracion</a></li>
-        <li><a href="#">Continentes</a></li>
+        <li><a href="#">Municipios</a></li>
       </ol>
 
 
@@ -51,20 +51,19 @@
           <div class="nav-tabs-custom">
               <!-- pestañas de el formulario-->
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#continentes" data-toggle="tab">Continentes</a></li>
-              <li><a href="{% url 'configuracion:conf_paises' %}" >Paises</a></li>
-              <li><a href="{% url 'configuracion:conf_departamento' %}" >Departamentos</a></li>
-              <li><a href="{% url 'configuracion:conf_municipio' %}" >Municipios</a></li>
-
+              <li><a href="{% url 'configuracion:conf_continente' %}">Continentes</a></li>
+              <li><a href="{% url 'configuracion:conf_paises' %}">Paises</a></li>
+              <li><a href="{% url 'configuracion:conf_departamento' %}">Departamento</a></li>
+              <li class="active"><a href="#municipios" data-toggle="tab">Municipios</a></li>
             </ul>
             {% csrf_token %}
             <div class="tab-content">
                 <!-- barras de acceso -->
-                <div class="active tab-pane" id="continentes">
+                <div class="active tab-pane" id="paises">
                     <br>
                     <div class="row">
                           <div class="col-md-2">
-                              <a href="{% url 'configuracion:conf_continente_registrar' %}">
+                              <a href="{% url 'configuracion:conf_municipio_registrar' %}">
                                 <button type="button" class="btn btn-primary">
                                     <span class='glyphicon glyphicon-edit'></span> Registrar</button>
                               </a>
@@ -75,32 +74,35 @@
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                  <h3 class="box-title">Continentes</h3>
+                                  <h3 class="box-title">Municipios</h3>
                                 </div>
                                 <!-- /.box-header -->
                                 <div class="box-body table-responsive no-padding">
-                                  <table id="continentes" class="table table-bordered table-hover dataTables">
+                                  <table id="municipios" class="table table-bordered table-hover dataTables">
                                     <thead>
                                         <tr>
+                                            <th>Departamento</th>
                                             <th>Codigo</th>
                                             <th>Descripcion</th>
-
                                             <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for continentes in lista_continentes %}
+                                        {% for municipios in lista_municipios %}
                                             <tr>
+                                                <td>{{municipios.departamentos.descripcion}}</td>
+                                                <td>{{municipios.codigo}}</td>
+                                                <td>{{municipios.descripcion}}</td>
 
-                                                <td>{{continentes.codigo}}</td>
-                                                <td>{{continentes.descripcion}}</td>
-
-                                                <td><center>
-                                                    <a class="btn btn-info btn-sm" href="{% url 'configuracion:conf_continente_editar' continentes.id %}" title="Editar "><i class="glyphicon glyphicon-pencil"></i></a>
-                                                    {% comment %}<a class="btn btn-info btn-sm" href="/configuracion/continentes/editar/{{continentes.id}}/"title="Editar "><i class="glyphicon glyphicon-pencil"></i></a>{% endcomment %}
-                                                </center></td>
-                                                <td><center><a class="btn btn-info btn-sm" href="{% url 'configuracion:conf_continente_borrar' continentes.id %}" title="Eliminar1">
+                                                <td><center><a class="btn btn-info btn-sm"
+                                                       href="{% url 'configuracion:conf_municipio_editar' municipios.id %}"
+                                                       title="Editar ">
+                                                    <i class="glyphicon glyphicon-pencil"></i>
+                                                </a></center></td>
+                                                <td><center><a class="btn btn-info btn-sm"
+                                                       href="{% url 'configuracion:conf_municipio_borrar' municipios.id %}"
+                                                       title="Eliminar ">
                                                     <i class="glyphicon glyphicon-trash"></i>
                                                 </a></center></td>
                                             </tr>

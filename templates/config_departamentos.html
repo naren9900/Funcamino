@@ -6,8 +6,6 @@
         <a href="/configuracion/departamentos/">Departamentos</a>
         <small>Configuracion</small>
       </h1>
-
-
       {% if messages %}
         {% for message in messages %}
             {% if message.tags %}
@@ -51,10 +49,10 @@
           <div class="nav-tabs-custom">
               <!-- pestañas de el formulario-->
             <ul class="nav nav-tabs">
-              <li><a href="/configuracion/continentes/" >Continentes</a></li>
-              <li><a href="/configuracion/paises/" >Paises</a></li>
-              <li class="active"><a href="#departamentos" data-toggle="tab">Departamentos</a></li>
-              <li><a href="/configuracion/municipios/" >Municipios</a></li>
+              <li><a href="{% url 'configuracion:conf_continente' %}" >Continentes</a></li>
+              <li><a href="{% url 'configuracion:conf_paises' %}" >Paises</a></li>
+              <li class="active"><a href="{% url 'configuracion:conf_departamento' %}" data-toggle="tab">Departamentos</a></li>
+              <li><a href="{% url 'configuracion:conf_municipio' %}" >Municipios</a></li>
             </ul>
             {% csrf_token %}
             <div class="tab-content">
@@ -96,12 +94,12 @@
                                                 <td>{{departamentos.descripcion}}</td>
 
                                                 <td><center><a class="btn btn-info btn-sm"
-                                                       href="/configuracion/departamentos/editar/{{departamentos.id}}/"
+                                                       href="{% url 'configuracion:conf_departamento_editar' departamentos.id %}"
                                                        title="Editar ">
                                                     <i class="glyphicon glyphicon-pencil"></i>
                                                 </a></center></td>
                                                 <td><center><a class="btn btn-info btn-sm"
-                                                       href="/configuracion/departamentos/borrar/{{departamentos.id}}/"
+                                                       href="{% url 'configuracion:conf_departamento_borrar' departamentos.id %}"
                                                        title="Eliminar ">
                                                     <i class="glyphicon glyphicon-trash"></i>
                                                 </a></center></td>

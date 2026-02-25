@@ -53,8 +53,8 @@
             <ul class="nav nav-tabs">
               <li><a href="{% url 'configuracion:conf_continente' %}" >Continentes</a></li>
               <li class="active"><a href="{% url 'configuracion:conf_paises' %}" data-toggle="tab">Paises</a></li>
-              <li><a href="/configuracion/departamentos/" >Departamento</a></li>
-              <li><a href="/configuracion/municipios/" >Municipios</a></li>
+              <li><a href="{% url 'configuracion:conf_departamento' %}">Departamento</a></li>
+              <li><a href="{% url 'configuracion:conf_municipio' %}" >Municipios</a></li>
             </ul>
             {% csrf_token %}
             <div class="tab-content">
