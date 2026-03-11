@@ -2,8 +2,8 @@
 {% load static %}
 {% block content %}
     <section class="content-header">
-      <h1>
-        <a href="{% url 'configuracion:conf_paises' %}">Paises</a>
+      <h1 style="margin-bottom: 15px;">
+        <a href="{% url 'configuration:conf_country' %}">Paises</a>
         <small>Editar Información</small>
       </h1>
         {% if messages %}
@@ -47,7 +47,7 @@
                 <div class="active tab-pane" id="paises">
                     <div class="row">
                       <div class="col-md-6">
-                          <form role="form" action="{% url 'configuracion:conf_pais_editar' paises.id %}" method="POST">
+                          <form role="form" action="{% url 'configuration:conf_country_edit' paises.id %}" method="POST">
                               {% csrf_token %}
 
                               <input type="hidden" class="form-control" id="id"
@@ -55,16 +55,16 @@
 
                               <div class="row">
                                   <div class="col-md-12">
-                                   <label>Pais</label>
+                                   <label>Continente</label>
                                   <div class="input-group ">
                                     <span class="input-group-addon"><i class="fa fa-binoculars"></i></span>
-                                      <select class="form-control select2 " style="width: 100%;" name="continentes" required>
+                                      <select class="form-control select2 " style="width: 100%;" name="continente" required>
                                            <option value="" selected disabled></option>
-                                              {% for continentes in lista_continentes %}
+                                              {% for Continent in lista_Continent %}
 
-                                              <option value="{{continentes.id}}"
-                                                   {% if continentes.id == paises.continentes_id %}selected{% endif %}>
-                                                   {{continentes.descripcion}}
+                                              <option value="{{Continent.id}}"
+                                                   {% if Continent.id == paises.continent.id %}selected{% endif %}>
+                                                   {{Continent.description}}
                                                </option>
                                               {% endfor %}
                                       </select>
@@ -80,7 +80,7 @@
                                        <input type="text" class="form-control" id="codigo"
                                              name="codigo" placeholder="Codigo DIAN "
                                              style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                              value = "{{paises.codigo}}" required>
+                                              value = "{{paises.code}}" required>
                                       </div>
                                   </div>
                               </div>
@@ -92,7 +92,7 @@
                                        <input type="text" class="form-control" id="descripcion"
                                              name="descripcion" placeholder="Descripcion "
                                              style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                              value = "{{paises.descripcion}}" required>
+                                              value = "{{paises.description}}" required>
                                       </div>
                                   </div>
                               </div>

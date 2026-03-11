@@ -2,8 +2,8 @@
 {% load static %}
 {% block content %}
     <section class="content-header">
-      <h1>
-        <a href="{% url 'configuracion:conf_paises' %}">Paises</a>
+      <h1 style="margin-bottom: 15px;">
+        <a href="{% url 'configuration:conf_municipality'  %}">Municipios</a>
         <small>Registrar Información</small>
       </h1>
     {% if messages %}
@@ -27,18 +27,18 @@
                 <div class="active tab-pane" id="terapia">
                     <div class="row">
                       <div class="col-md-6">
-                          <form role="form" action="{% url 'configuracion:conf_pais_registrar' %}" method="POST">
+                          <form role="form" action="{% url 'configuration:conf_municipality_register' %}" method="POST">
                               {% csrf_token %}
                               <div class="row">
                                   <div class="col-md-12">
-                                   <label>Continentes</label>
+                                   <label>Departamentos</label>
                                   <div class="input-group ">
                                     <span class="input-group-addon"><i class="fa fa-binoculars"></i></span>
-                                      <select class="form-control select2 " style="width: 100%;" name="continentes" required>
-                                           <option value="" selected disabled></option>
-                                              {% for continentes in lista_continentes %}
-                                              <option value="{{ continentes.id }}">{{continentes.descripcion}}</option>
-                                              {% endfor %}
+                                      <select class="form-control select2 " style="width: 100%;" name="departamentos"  required>
+                                          <option value="" selected disabled></option>
+                                          {% for departamentos in lista_departamentos %}
+                                              <option value="{{ departamentos.id }}">{{departamentos.description}}</option>
+                                          {% endfor %}
                                       </select>
                                   </div>
                               </div>
@@ -50,7 +50,7 @@
                                      <div class="input-group ">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                        <input type="text" class="form-control" id="codigo"
-                                             name="codigo" placeholder="Codigo Dian" min="1" max="999"
+                                             name="codigo" placeholder="Codigo Dian" min="1" max="99999"
                                              style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
                                               required>
                                       </div>
@@ -78,7 +78,7 @@
                           </form>
                       </div>
                   </div>
-                    <!-- Tabla tipo identificacion existentes -->
+                    <!-- Tabla  -->
                 </div>
              </div>
 

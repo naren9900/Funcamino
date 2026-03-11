@@ -2,8 +2,8 @@
 {% load static %}
 {% block content %}
     <section class="content-header">
-      <h1>
-        <a href="/configuracion/paises/">Paises</a>
+      <h1 style="margin-bottom: 15px;">
+        <a href="{% url 'configuration:conf_country' %}">Paises</a>
         <small>Configuracion</small>
       </h1>
 
@@ -51,10 +51,10 @@
           <div class="nav-tabs-custom">
               <!-- pestañas de el formulario-->
             <ul class="nav nav-tabs">
-              <li><a href="{% url 'configuracion:conf_continente' %}" >Continentes</a></li>
-              <li class="active"><a href="{% url 'configuracion:conf_paises' %}" data-toggle="tab">Paises</a></li>
-              <li><a href="{% url 'configuracion:conf_departamento' %}">Departamento</a></li>
-              <li><a href="{% url 'configuracion:conf_municipio' %}" >Municipios</a></li>
+              <li><a href="{% url 'configuration:conf_continent' %}" >Continente</a></li>
+              <li class="active"><a href="{% url 'configuration:conf_country' %}" data-toggle="tab">Paises</a></li>
+              <li><a href="{% url 'configuration:conf_department' %}">Departamento</a></li>
+              <li><a href="{% url 'configuration:conf_municipality' %}" >Municipios</a></li>
             </ul>
             {% csrf_token %}
             <div class="tab-content">
@@ -63,7 +63,7 @@
                     <br>
                     <div class="row">
                           <div class="col-md-2">
-                              <a href="{% url 'configuracion:conf_pais_registrar' %}">
+                              <a href="{% url 'configuration:conf_country_register' %}">
                                 <button type="button" class="btn btn-primary">
                                     <span class='glyphicon glyphicon-edit'></span> Registrar</button>
                               </a>
@@ -91,17 +91,17 @@
                                     <tbody>
                                         {% for paises in lista_paises %}
                                             <tr>
-                                                <td>{{paises.continentes.descripcion}}</td>
-                                                <td>{{paises.codigo}}</td>
-                                                <td>{{paises.descripcion}}</td>
+                                                <td>{{paises.continent.description}}</td>
+                                                <td>{{paises.code}}</td>
+                                                <td>{{paises.description}}</td>
 
                                                 <td><center><a class="btn btn-info btn-sm"
-                                                       href="{% url 'configuracion:conf_pais_editar' paises.id %}"
+                                                       href="{% url 'configuration:conf_country_edit' paises.id %}"
                                                        title="Editar ">
                                                     <i class="glyphicon glyphicon-pencil"></i>
                                                 </a></center></td>
                                                 <td><center><a class="btn btn-info btn-sm"
-                                                       href="{% url 'configuracion:conf_pais_borrar' paises.id %}"
+                                                       href="{% url 'configuration:conf_country_delete' paises.id %}"
                                                        title="Eliminar">
                                                     <i class="glyphicon glyphicon-trash"></i>
                                                 </a></center></td>

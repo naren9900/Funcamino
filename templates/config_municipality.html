@@ -2,10 +2,12 @@
 {% load static %}
 {% block content %}
     <section class="content-header">
-      <h1>
-        <a href="/configuracion/departamentos/">Departamentos</a>
+      <h1 style="margin-bottom: 15px;">
+        <a href="{% url 'configuration:conf_municipality' %}">Municipios</a>
         <small>Configuracion</small>
       </h1>
+
+
       {% if messages %}
         {% for message in messages %}
             {% if message.tags %}
@@ -39,7 +41,7 @@
       {% endif %}
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Configuracion</a></li>
-        <li><a href="#">Departamentos</a></li>
+        <li><a href="#">Municipios</a></li>
       </ol>
 
 
@@ -49,10 +51,10 @@
           <div class="nav-tabs-custom">
               <!-- pestañas de el formulario-->
             <ul class="nav nav-tabs">
-              <li><a href="{% url 'configuracion:conf_continente' %}" >Continentes</a></li>
-              <li><a href="{% url 'configuracion:conf_paises' %}" >Paises</a></li>
-              <li class="active"><a href="{% url 'configuracion:conf_departamento' %}" data-toggle="tab">Departamentos</a></li>
-              <li><a href="{% url 'configuracion:conf_municipio' %}" >Municipios</a></li>
+              <li><a href="{% url 'configuration:conf_continent' %}">Continente</a></li>
+              <li><a href="{% url 'configuration:conf_country' %}">Paises</a></li>
+              <li><a href="{% url 'configuration:conf_department' %}">Departamento</a></li>
+              <li class="active"><a href="#municipios" data-toggle="tab">Municipios</a></li>
             </ul>
             {% csrf_token %}
             <div class="tab-content">
@@ -61,7 +63,7 @@
                     <br>
                     <div class="row">
                           <div class="col-md-2">
-                              <a href="/configuracion/departamentos/registrar/">
+                              <a href="{% url 'configuration:conf_municipality_register' %}">
                                 <button type="button" class="btn btn-primary">
                                     <span class='glyphicon glyphicon-edit'></span> Registrar</button>
                               </a>
@@ -72,14 +74,14 @@
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                  <h3 class="box-title">Departamentos</h3>
+                                  <h3 class="box-title">Municipios</h3>
                                 </div>
                                 <!-- /.box-header -->
                                 <div class="box-body table-responsive no-padding">
-                                  <table id="departamentos" class="table table-bordered table-hover dataTables">
+                                  <table id="municipios" class="table table-bordered table-hover dataTables">
                                     <thead>
                                         <tr>
-                                            <th>Pais</th>
+                                            <th>Departamento</th>
                                             <th>Codigo</th>
                                             <th>Descripcion</th>
                                             <th></th>
@@ -87,19 +89,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for departamentos in lista_departamentos %}
+                                        {% for municipios in lista_municipios %}
                                             <tr>
-                                                <td>{{departamentos.paises.descripcion}}</td>
-                                                <td>{{departamentos.codigo}}</td>
-                                                <td>{{departamentos.descripcion}}</td>
+                                                <td>{{municipios.department.description}}</td>
+                                                <td>{{municipios.code}}</td>
+                                                <td>{{municipios.description}}</td>
 
                                                 <td><center><a class="btn btn-info btn-sm"
-                                                       href="{% url 'configuracion:conf_departamento_editar' departamentos.id %}"
+                                                       href="{% url 'configuration:conf_municipality_edit' municipios.id %}"
                                                        title="Editar ">
                                                     <i class="glyphicon glyphicon-pencil"></i>
                                                 </a></center></td>
                                                 <td><center><a class="btn btn-info btn-sm"
-                                                       href="{% url 'configuracion:conf_departamento_borrar' departamentos.id %}"
+                                                       href="{% url 'configuration:conf_municipality_delete' municipios.id %}"
                                                        title="Eliminar ">
                                                     <i class="glyphicon glyphicon-trash"></i>
                                                 </a></center></td>

@@ -2,9 +2,9 @@
 {% load static %}
 {% block content %}
     <section class="content-header">
-        <h1>
-            <a href="/configuracion/continentes/">Continentes</a>
-            <small>Registrar Información</small>
+        <h1 style="margin-bottom: 15px;">
+            <a href="{% url 'configuration:conf_department' %}">Departamentos</a>
+            <small>Registrar Información 1</small>
         </h1>
         {% if messages %}
             {% for message in messages %}
@@ -27,33 +27,51 @@
                     <div class="active tab-pane" id="terapia">
                         <div class="row">
                             <div class="col-md-6">
-                                <form role="form" action="{% url 'configuracion:conf_continente_registrar' %}"
-                                      method="POST">
+                                <form role="form" action="{% url 'configuration:conf_department_register' %}" method="POST">
                                     {% csrf_token %}
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label>Código</label>
+                                            <label>Paises</label>
                                             <div class="input-group ">
-                                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                                <input type="text" class="form-control" id="codigo"
-                                                       placeholder="CODIGO"
-                                                       name="codigo" required>
+                                                <span class="input-group-addon"><i class="fa fa-binoculars"></i></span>
+                                                <select class="form-control select2 " style="width: 100%;" name="paises"
+                                                        required>
+                                                    <option value="" selected disabled></option>
+                                                    {% for paises in lista_paises %}
+                                                        <option value="{{ paises.id }}">{{ paises.description }}</option>
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label>Descripcion</label>
+                                            <label>Codigo </label>
                                             <div class="input-group ">
                                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                                <input type="text" class="form-control" id="descripcion"
-                                                       name="descripcion" placeholder="Descripcion"
+                                                <input type="text" class="form-control" id="codigo"
+                                                       name="codigo" placeholder="Codigo Dian" min="1" max="99"
                                                        style="text-transform:uppercase;"
                                                        onkeyup="javascript:this.value=this.value.toUpperCase();"
                                                        required>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Descripcion </label>
+                                            <div class="input-group ">
+                                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                <input type="text" class="form-control" id="descripcion"
+                                                       name="descripcion" placeholder="Descripcion "
+                                                       style="text-transform:uppercase;"
+                                                       onkeyup="javascript:this.value=this.value.toUpperCase();"
+                                                       required>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                     <br>
                                     <!-- /.box-body -->
@@ -64,7 +82,7 @@
                                 </form>
                             </div>
                         </div>
-                        <!-- Tabla Continentes -->
+                        <!-- Tabla tipo identificacion existentes -->
                     </div>
                 </div>
 

@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class EducateConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'educate'
+    name = 'context.educate'

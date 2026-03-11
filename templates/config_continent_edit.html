@@ -1,12 +1,7 @@
 {% extends 'admin_base.html' %}
 {% load static %}
 {% block content %}
-    <section class="content-header">
-      <h1>
-        <a href="{% url 'configuracion:conf_municipio' %}">Municipios</a>
-        <small>Editar Información</small>
-      </h1>
-      {% if messages %}
+    {% if messages %}
         {% for message in messages %}
             {% if message.tags %}
                 <br>
@@ -37,6 +32,11 @@
             {% endif %}
         {% endfor %}
       {% endif %}
+    <section class="content-header">
+      <h1 style="margin-bottom: 15px;">
+        <a href="{% url 'configuration:conf_continent' %}">Continente</a>
+        <small>Editar Información</small>
+      </h1>
     </section>
     <section>
     <div class="col-md-12">
@@ -44,67 +44,48 @@
               <!-- pestañas de el formulario-->
             <div class="tab-content">
                 <!-- barras de acceso -->
-                <div class="active tab-pane" id="municipios">
+                <div class="active tab-pane" id="Continent">
                     <div class="row">
                       <div class="col-md-6">
-                          <form role="form" action="{% url 'configuracion:conf_municipio_editar' municipios.id %}" method="POST">
+                          <form role="form" action="{% url 'configuration:conf_continent_edit' continente.id %}"   method="POST">
                               {% csrf_token %}
 
                               <input type="hidden" class="form-control" id="id" placeholder="CODIGO"
-                                     name="id" value="{{municipios.id}}">
+                                     min="1" max="99" name="id" value="{{continente.id}}">
 
-                              <div class="row">
-                                  <div class="col-md-12">
-                                   <label>Departamentos</label>
-                                  <div class="input-group ">
-                                    <span class="input-group-addon"><i class="fa fa-binoculars"></i></span>
-                                      <select class="form-control select2 " style="width: 100%;" name="departamentos" required>
-                                           <option value="" selected disabled></option>
-                                              {% for departamentos in lista_departamentos %}
-
-                                              <option value="{{departamentos.id}}"
-                                                   {% if departamentos.id == municipios.departamentos_id %}selected{% endif %}>
-                                                   {{departamentos.descripcion}}
-                                               </option>
-                                              {% endfor %}
-                                      </select>
-                                  </div>
-                              </div>
-
-                              </div>
                               <div class="row">
                                   <div class="col-md-12">
                                      <label>Codigo</label>
                                      <div class="input-group ">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                        <input type="text" class="form-control" id="codigo"
-                                             name="codigo" placeholder="Codigo DIAN "
+                                             name="codigo" placeholder="Codigo"
                                              style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                              value = "{{municipios.codigo}}" required>
+                                              value="{{continente.code}}" required>
                                       </div>
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="col-md-12">
-                                     <label>Descripcion </label>
+                                     <label>Descripcion</label>
                                      <div class="input-group ">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                        <input type="text" class="form-control" id="descripcion"
-                                             name="descripcion" placeholder="Descripcion "
+                                             name="descripcion" placeholder="Descripcion"
                                              style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                              value = "{{municipios.descripcion}}" required>
+                                              value="{{continente.description}}" required>
                                       </div>
                                   </div>
                               </div>
                               <br>
                               <!-- /.box-body -->
                               <div>
-                              <button type="submit" class="btn btn-primary btn-block btn-flat">Editar</button>
+                              <button type="submit" class="btn btn-primary btn-block btn-flat">Guardar</button>
                             </div>
                           </form>
                       </div>
                   </div>
-                    <!-- Tabla  -->
+                    <!-- Tabla Continent -->
                 </div>
              </div>
 

@@ -2,8 +2,8 @@
 {% load static %}
 {% block content %}
     <section class="content-header">
-      <h1>
-        <a href="{% url 'configuracion:conf_municipio'  %}">Municipios</a>
+      <h1 style="margin-bottom: 15px;">
+        <a href="{% url 'configuration:conf_country' %}">Paises</a>
         <small>Registrar Información</small>
       </h1>
     {% if messages %}
@@ -27,17 +27,17 @@
                 <div class="active tab-pane" id="terapia">
                     <div class="row">
                       <div class="col-md-6">
-                          <form role="form" action="{% url 'configuracion:conf_municipio_registrar' %}" method="POST">
+                          <form role="form" action="{% url 'configuration:conf_country_register' %}" method="POST">
                               {% csrf_token %}
                               <div class="row">
                                   <div class="col-md-12">
-                                   <label>Departamentos</label>
+                                   <label>Continente</label>
                                   <div class="input-group ">
                                     <span class="input-group-addon"><i class="fa fa-binoculars"></i></span>
-                                      <select class="form-control select2 " style="width: 100%;" name="departamentos" required>
+                                      <select class="form-control select2 " style="width: 100%;" name="continente" required>
                                            <option value="" selected disabled></option>
-                                              {% for departamentos in lista_departamentos %}
-                                              <option value="{{ departamentos.id }}">{{departamentos.descripcion}}</option>
+                                              {% for Continent in lista_continent %}
+                                              <option value="{{ Continent.id }}">{{Continent.description}}</option>
                                               {% endfor %}
                                       </select>
                                   </div>
@@ -50,7 +50,7 @@
                                      <div class="input-group ">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                        <input type="text" class="form-control" id="codigo"
-                                             name="codigo" placeholder="Codigo Dian" min="1" max="99999"
+                                             name="codigo" placeholder="Codigo Dian" min="1" max="999"
                                              style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();"
                                               required>
                                       </div>
@@ -78,7 +78,7 @@
                           </form>
                       </div>
                   </div>
-                    <!-- Tabla  -->
+                    <!-- Tabla tipo identificacion existentes -->
                 </div>
              </div>
 
