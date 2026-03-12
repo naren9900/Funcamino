@@ -1,9 +1,0 @@
-
-msgid "If you have not created an account yet, then please sign up first."
-msgstr "Si aún no tienes una cuenta, por favor regístrate primero."
-
-msgid "Remember me"
-msgstr "Recuérdame"
-
-msgid "Forgot password?"
-msgstr "¿Olvidaste tu contraseña?"
